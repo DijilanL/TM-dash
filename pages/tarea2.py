@@ -158,9 +158,9 @@ donde $P(t)$ denota el tamaño poblacional (o biomasa), $r>0$ la tasa intrínsec
 
 Los puntos de equilibrio positivos satisfacen $rP\!\left(1-\frac{P}{K}\right)-H=0$, de donde
 $$
-P^\*=\frac{K}{2}\left(1\pm\sqrt{1-\frac{4H}{rK}}\right),
+P^*=\frac{K}{2}\left(1\pm\sqrt{1-\frac{4H}{rK}}\right),
 $$
-que existen si y solo si $H\le H^\*=\frac{rK}{4}$. Si $H<H^\*$, el equilibrio mayor es estable y el menor es inestable; si $H=H^\*$, hay un único equilibrio en $P=K/2$; si $H>H^\*$, no existe equilibrio positivo y la población colapsa.
+que existen si y solo si $H\le H^*=\frac{rK}{4}$. Si $H<H^*$, el equilibrio mayor es estable y el menor es inestable; si $H=H^*$, hay un único equilibrio en $P=K/2$; si $H>H^*$, no existe equilibrio positivo y la población colapsa.
 """, mathjax=True),
     ], className="content left"),
 
