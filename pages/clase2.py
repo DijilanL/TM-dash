@@ -6,9 +6,7 @@ import plotly.graph_objects as go
 
 dash.register_page(__name__, path="/pagina6", name="Campo Vectorial")
 
-# =========================
-#   LAYOUT
-# =========================
+
 layout = html.Div(
     children=[
      
@@ -196,9 +194,7 @@ layout = html.Div(
     className="page-container",
 )
 
-# =========================
-#   CALLBACK
-# =========================
+
 @callback(
     [
         Output("grafica-campo", "figure"),
