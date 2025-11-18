@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-dash.register_page(__name__, path="/pagina4", name="Campo Vectorial")
+dash.register_page(__name__, path="/pagina6", name="Campo Vectorial")
 
 # =========================
 #   LAYOUT

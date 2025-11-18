@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 from scipy.integrate import odeint
 
 
-dash.register_page(__name__, path="/pagina6", name="Modelo SEIR")
+dash.register_page(__name__, path="/pagina8", name="Modelo SEIR")
 
 
 def modelo_seir(y, t, beta, sigma, gamma, N):

@@ -105,46 +105,52 @@ def build_figure(P0, r, K, H, t_max):
             annotation_text='Extinción', annotation_position='top'
         )
     ymax = max(K, P.max()) * 1.10 if len(P) else K*1.10
+
     fig.update_layout(
         title=dict(
             text='Logístico con cosecha',
             font=dict(family='Playfair Display', size=20, color='purple'),
-            x=0.5, y=0.995, xanchor='center', yanchor='top', pad=dict(t=6, b=0)
+            x=0.5, y=0.97, xanchor='center', yanchor='top',
+            pad=dict(t=4, b=0)
         ),
         xaxis_title='Tiempo (t)',
         yaxis_title='Tamaño poblacional / biomasa P(t)',
-        margin=dict(l=60, r=40, t=110, b=90),
+        # más espacio arriba y sobre todo abajo para la leyenda
+        margin=dict(l=70, r=40, t=80, b=130),
         paper_bgcolor='lightblue',
         plot_bgcolor='grey',
         font=dict(family='Playfair Display, serif', size=15, color='black'),
         legend=dict(
             orientation='h',
-            x=0.5, y=1.08, xanchor='center', yanchor='bottom',
-            bgcolor='rgba(255,255,255,0.70)', bordercolor='rgba(0,0,0,0.2)', borderwidth=1,
+            x=0.5, y=-0.25,           # leyenda debajo del eje X
+            xanchor='center', yanchor='top',
+            bgcolor='rgba(255,255,255,0.80)',
+            bordercolor='rgba(0,0,0,0.2)', borderwidth=1,
             itemsizing='constant', itemwidth=60
         ),
         uniformtext_minsize=12, uniformtext_mode='hide'
     )
+
     fig.update_xaxes(
-        range=[0, float(t_max)],  
+        range=[0, float(t_max)],
         showgrid=True, gridwidth=1, gridcolor='lightpink',
         zeroline=True, zerolinewidth=2, zerolinecolor='blue',
         showline=True, linecolor='black', linewidth=2, mirror=True,
-        automargin=True, title_standoff=10, ticklabelposition='outside'
+        automargin=True, title_standoff=20, ticklabelposition='outside'
     )
     fig.update_yaxes(
         range=[0, ymax],
         showgrid=True, gridwidth=1, gridcolor='lightpink',
         zeroline=True, zerolinewidth=2, zerolinecolor='blue',
         showline=True, linecolor='black', linewidth=2, mirror=True,
-        automargin=True, title_standoff=10, ticklabelposition='outside'
+        automargin=True, title_standoff=20, ticklabelposition='outside'
     )
 
     return fig, H_star
 
 #######################################################
 
-dash.register_page(__name__, path='/pagina3', name='Pagina 3')
+dash.register_page(__name__, path='/pagina5', name='Pagina 4')
 
 layout = html.Div(children=[
     html.Div(children=[
@@ -168,34 +174,67 @@ que existen si y solo si $H\le H^*=\frac{rK}{4}$. Si $H<H^*$, el equilibrio mayo
         html.H2("Parámetros y gráfica dinámica", className='title'),
 
         html.Div([
-            html.Label("r (tasa intrínseca)"),
-            dcc.Slider(id='p3-r', min=0.005, max=0.2, step=0.005, value=0.06,
-                       marks={0.005:'0.005', 0.05:'0.05', 0.1:'0.10', 0.15:'0.15', 0.2:'0.20'}),
+            html.Div([
+                html.Label("r (tasa intrínseca)"),
+                dcc.Input(
+                    id='p3-r',
+                    type='number',
+                    value=0.06,
+                    step=0.005,
+                    className='input-field'
+                ),
+            ], className='input-group'),
 
-            html.Label("K (capacidad de carga)"),
-            dcc.Slider(id='p3-K', min=50, max=500, step=10, value=150,
-                       marks={50:'50', 150:'150', 300:'300', 500:'500'}),
+            html.Div([
+                html.Label("K (capacidad de carga)"),
+                dcc.Input(
+                    id='p3-K',
+                    type='number',
+                    value=150,
+                    step=10,
+                    className='input-field'
+                ),
+            ], className='input-group'),
 
-            html.Label("H (cosecha constante)"),
-            dcc.Slider(id='p3-H', min=0.0, max=50.0, step=0.5, value=5.0,
-                       marks={0:'0', 10:'10', 20:'20', 30:'30', 40:'40', 50:'50'}),
+            html.Div([
+                html.Label("H (cosecha constante)"),
+                dcc.Input(
+                    id='p3-H',
+                    type='number',
+                    value=5.0,
+                    step=0.5,
+                    className='input-field'
+                ),
+            ], className='input-group'),
 
-            html.Label("P₀ (población inicial)"),
-            dcc.Slider(id='p3-P0', min=0, max=300, step=1, value=80,
-                       marks={0:'0', 50:'50', 100:'100', 150:'150', 200:'200', 300:'300'}),
+            html.Div([
+                html.Label("P₀ (población inicial)"),
+                dcc.Input(
+                    id='p3-P0',
+                    type='number',
+                    value=80,
+                    step=1,
+                    className='input-field'
+                ),
+            ], className='input-group'),
 
-            html.Label("Horizonte temporal (t máx)"),
-            dcc.Slider(
-                id='p3-T',
-                min=1, max=40, step=1, value=20,
-                marks={1:'1', 5:'5', 10:'10', 15:'15', 20:'20', 25:'25', 30:'30', 35:'35', 40:'40'}
-            ),
-        ], style={'padding':'6px 0', 'display':'grid', 'gap':'8px'}),
+            html.Div([
+                html.Label("Horizonte temporal (t máx)"),
+                dcc.Input(
+                    id='p3-T',
+                    type='number',
+                    value=20,
+                    step=1,
+                    className='input-field'
+                ),
+            ], className='input-group'),
+        ], className="sir-form-grid"),
 
         html.Div(id='p3-msy', style={'margin':'6px 0 10px 0'}),
-        dcc.Graph(id='p3-fig', style={'height':'420px', 'width':'100%'})
+        dcc.Graph(id='p3-fig', style={'height': '460px', 'width': '100%'})  # un poco más alto
     ], className="content right")
 ], className="page-container")
+
 
 @callback(
     Output('p3-fig', 'figure'),
@@ -210,7 +249,11 @@ def update_pagina3(r, K, H, P0, T):
     r = float(r); K = float(K); H = float(H); P0 = float(P0); T = float(T)
     fig, H_star = build_figure(P0, r, K, H, T)
     if r > 0 and K > 0:
-        regime = "sostenible (H < H*)" if H < (r*K)/4 else ("crítico (H ≈ H*)" if abs(H - (r*K)/4) < 1e-9 else "colapso (H > H*)")
+        regime = (
+            "sostenible (H < H*)" if H < (r*K)/4
+            else ("crítico (H ≈ H*)" if abs(H - (r*K)/4) < 1e-9
+                  else "colapso (H > H*)")
+        )
         txt = f"H* = rK/4 = {H_star:.4f}. Régimen: {regime}"
     else:
         txt = "Parámetros inválidos: r y K deben ser positivos."
